@@ -17,6 +17,7 @@ $(document).ready(function () {
     let filtered;
     let showedItems;
     let click = 1;
+      
 
     //fetch('https://api.github.com/users')
     fetch('./OUR-WORK-JSON.json')
@@ -53,6 +54,7 @@ $(document).ready(function () {
             showedItems.forEach(element => {
                 createMyDom(element.product_img_small,element.productname,element.product_link);
                 initMasonry();
+                
                 //initFancybox();
             });
         } else {
@@ -76,6 +78,7 @@ $(document).ready(function () {
             $grid.imagesLoaded().progress(function () {
                 $grid.masonry('layout');
             });
+            $grid.masonry('reloadItems'); // reload masonry
         }, 100);
     }
 
