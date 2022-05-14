@@ -10,17 +10,62 @@ $(document).ready(function () {
         $div.append($a);
         $wrapper.append($div);
     }
-    fetch('https://api.github.com/users')
+
+    let category = 287;
+    let startItem = 0;
+    let defaultPageItems = 9;
+    let filtered;
+    let showedItems;
+    let click = 1;
+
+    //fetch('https://api.github.com/users')
+    fetch('./OUR-WORK-JSON.json')
         .then(response => response.json())
         .then(items => {
-            console.log(items)
-            items.forEach(element => {
-                createMyDom(element.avatar_url,element.login,element.following_url);
+            //console.log(items)
+
+            filtered = items.filter((element) => {
+                return parseInt(element.categoryids) == parseInt(category);
+                
+                // createMyDom(element.product_img_small,element.productname,element.product_link);
+                // initMasonry();
+                // initFancybox();
+            });
+            showedItems = filtered.slice(startItem,defaultPageItems);
+            showedItems.forEach(element => {
+                createMyDom(element.product_img_small,element.productname,element.product_link);
+                initMasonry();
+                initFancybox();
+            });
+            //console.log(filtered, 'filtered');
+            console.log(showedItems)
+        });
+     
+    
+    $('#showMore').on('click', function() {
+        click++; // increase counter on click, it means how many times button was clicked
+        let nextItem = defaultPageItems * click; // looking for the next sliced item
+        let lastItem = filtered.length; // looking for last item in filtered arr
+
+        if(filtered.length < defaultPageItems * click) { // if filtered items are less 
+            showedItems = filtered.slice(nextItem,defaultPageItems);
+            console.log(showedItems)
+            showedItems.forEach(element => {
+                createMyDom(element.product_img_small,element.productname,element.product_link);
                 initMasonry();
                 //initFancybox();
             });
-
-        });
+        } else {
+            showedItems = filtered.slice(nextItem,lastItem);
+            console.log(showedItems)
+            showedItems.forEach(element => {
+                createMyDom(element.product_img_small,element.productname,element.product_link);
+                initMasonry();
+                //initFancybox();
+            });
+        }
+        
+    });  
 
     function initMasonry() {
         setTimeout(() => {
