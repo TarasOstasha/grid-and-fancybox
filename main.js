@@ -5,7 +5,7 @@ $(document).ready(function () {
         $div = $("<div class='grid-item'></div>");
         $a = $(`<a data-caption="<h1>${data_caption}</h1>" data-fancybox="gallery" href="${img_url}"></a>`);
         $img = $(`<img src="${img_url}" />`);
-
+        
         $a.append($img);
         $div.append($a);
         $wrapper.append($div);
@@ -65,6 +65,7 @@ $(document).ready(function () {
                 initMasonry();
                 //initFancybox();
             });
+            $('#showMore').css('display','none');
         }
         
     });  
